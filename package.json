@@ -1,0 +1,20 @@
+{
+  "name": "node-and-express",
+  "version": "0.0.1",
+  "description": "API Rest",
+  "main": "index.js",
+  "author": "Sergio Manuel Suárez",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.1",
+    "punycode": "^2.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
