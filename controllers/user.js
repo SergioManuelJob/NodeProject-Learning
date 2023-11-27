@@ -61,9 +61,6 @@ async function uploadAvatar(req, res){
         user.avatar = fileName
        
         let userUpdated = await User.findByIdAndUpdate({ _id: params.id}, user)
-        console.log(userUpdated.email)
-        console.log(userUpdated.password)
-        console.log(userUpdated.avatar)
         if(!userUpdated) res.status(400).send({msg: "The user could not be found"})
         else res.status(200).send({msg: "Updated succesfully"})
     }
