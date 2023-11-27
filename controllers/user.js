@@ -38,7 +38,12 @@ async function login(req, res) {
     }
 }
 
+function protected(req, res){
+    res.status(200).send({msg: "Content of the endpoint that's protected"})
+}
+
 module.exports = {
     register,
-    login
+    login,
+    protected
 }

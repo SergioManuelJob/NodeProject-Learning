@@ -9,9 +9,8 @@ function ensureAuth(req, res, next) {
         return res.status(403).send({msg: 'The request has no authentication header'})
 
     const token = req.headers.authorization.replace(/['"]+/g, "")
-
-    try{
-        const payload = jwt.decodeToken(token, SECRET_KEY)
+    const payload = jwt.decodeToken(token, SECRET_KEY)
+    try{   
         if(payload.exp <= moment().unix())
             return res.status(404).send({msg: "Token has expired"})
     } catch(error){
