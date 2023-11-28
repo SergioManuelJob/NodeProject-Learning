@@ -1,4 +1,6 @@
 const bcrypt = require('bcryptjs')
+const fs = require('fs')
+const path = require('path')
 const User = require("../models/user")
 const jwt = require('../services/jwt')
 
@@ -64,48 +66,25 @@ async function uploadAvatar(req, res){
         if(!userUpdated) res.status(400).send({msg: "The user could not be found"})
         else res.status(200).send({msg: "Updated succesfully"})
     }
-    
+}
 
-    
+async function getAvatar(req, res) {
+    const { avatarName } =  req.params
+    const filePath = "./uploads/" + avatarName
 
-    // User.findById({_id: params.id}, (err, userData) => {
-
-    //         if(err) res.status(500).send({ msg: 'Server error'})
-
-    //         if(!userData) res.status(404).send({ msg: "User could not be found"})
-
-    //         let user = userData
-
-    //         if(req.files){
-    //             const filePath =  req.files.avatar.path
-    //             const fileSplit = filePath.split("/")
-    //             let fileName = fileSplit[1]
-    //             let extSplit = fileName.split(".")
-    //             let fileExt = extSplit[1]
-
-    //             if(fileExt !== "png" && fileExt !== "jpg")
-    //                 res.status(400).send({msg: "The image extension is invalid. Only .jpg and .png is valid"})
-    //             else {
-    //                 user.avatar = fileName
-    //                 User.findByIdAndUpdate({ _id: params.id}, user, (err, userResult) => {
-    //                     if(err) {
-    //                         res.status(500).send({msg: "Server error"})
-    //                     }
-    //                     if(!userResult) {
-    //                         res.status(404).send({ msg: "User could not be found"})
-    //                     }
-    //                     res.status(200).send({msg: "Updated succesfully"})
-    //                 })
-    //             }
-    //         }
-
-    //     }
-    // )
+    fs.stat(filePath, (err, stat) => {
+        if(err){
+            res.status(404).send({ msg: "The avatar does not exist"})
+        } else {
+            res.sendFile(path.resolve(filePath))
+        }
+    })
 }
 
 module.exports = {
     register,
     login,
     protected,
-    uploadAvatar
+    uploadAvatar,
+    getAvatar
 }
